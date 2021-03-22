@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments.html :: headerfiles"></head>
+<body>
+    <header th:insert="fragments.html :: nav"></header>
+    <br>
+    <br>
+    <br>
+    <br>
+    <div class="mainContainer">
+        <br>
+        <div class="jumbotron myRounded infoPanel">
+            <div sec:authorize="isAuthenticated()">
+                <h1 align="center">
+                    <i class="fas fa-exclamation-triangle pulseAnimation"></i>
+                    Projekt na zaliczenie przedmiotu AiTSI!
+                    <i class="fas fa-exclamation-triangle pulseAnimation"></i>
+                </h1>
+                <p class="lead" align="center">Autorem projektu jest: Bartosz Zawada</p>
+                <p class="lead"><span>Wciskając przycisk <a th:href="@{/}"><i class="fa fa-home"></i></a> zostaniesz przeniesiony na stronę z instrukcją. </span></p>
+                <p class="lead"><span>W zakładce <a th:href="@{/vehicles}">Pojazdy</a> znajdziesz wszystkie pojazdy dostępne do wypożyczenia w serwisie. </span></p>
+                <p class="lead"><span>W zakładce <a th:href="@{/userInfo}">Użytkownik</a> znajduje się lista wypożyczeń dla zalogowanego użytkownika. </span></p>
+                <p class="lead"><span>W zakładce <a th:href="@{/info}">Informacje techniczne</a> można znaleźć informacje na temat użytych technologii do napisania serwisu, oraz ocenę autora dlaczego serwis spełnia wymogi przedmiotu.</span></p>
+
+            </div>
+            <div sec:authorize="isAnonymous()">
+                <h1 align="center">
+                    <i class="fas fa-exclamation-triangle pulseAnimation" style="font-size:40px;color: red"></i>
+                    Projekt na zaliczenie przedmiotu AiTSI!
+                    <i class="fas fa-exclamation-triangle pulseAnimation" style="font-size:40px;color: red"></i>
+                </h1>
+                <p class="lead"><span>To jest strona główna aplikacji. Jeżeli masz konto <a th:href="@{/login}">zaloguj się</a>, jeżeli nie, musisz się zarejestrować.</span></p>
+                <p class="lead">Przycisk do zalogowania znajduje się w prawym górnym rogu ekranu. Więcej informacji dostępnych po zalogowaniu.</p>
+            </div>
+        </div>
+    </div>
+
+</body>
+<footer th:insert="fragments :: footer"></footer>
+</html>

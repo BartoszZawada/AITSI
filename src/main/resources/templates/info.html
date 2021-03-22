@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments.html :: headerfiles"></head>
+<body>
+    <header th:insert="fragments.html :: nav"></header>
+    <br>
+    <br>
+    <div class="mainContainer">
+        <br>
+        <div class="jumbotron myRounded infoPanel">
+            <div sec:authorize="isAuthenticated()">
+                <h1 align="center">
+                    Wykorzystane technologie!
+                </h1>
+                <ul>
+                    <li class="lead">HTML 5 - Wszystkie pliki w katalogu template zostały napisane używając języka HTML w wersji 5. </li>
+                    <li class="lead">CSS - w pliku main.css w katalogu /static/css znajdują się zdefiniowane arkusze stylów. </li>
+                    <li class="lead">Thymeleaf - silnik szablonów, narzędzie bardzo często wykorzystywane do współpracy z frameworkiem Spring. </li>
+                    <li class="lead">Bootstrap - biblioteka graficzna określająca styl wszystkich nieopisanych komponentów. </li>
+                    <li class="lead">SpringBoot - wersja 2.4.3, framework projektu od strony backendu, biblioteka oparta na javie będąca sercem aplikacji. </li>
+                    <li class="lead">SpringSecurity - ochrona springa, która uniemożliwia dostanie się do niepożądanych treści przez niezalogowanego użytkownika. </li>
+                    <li class="lead">Java w wersji 11, jeden z najpopularniejszych języków programowania. </li>
+                    <li class="lead">Baza danych H2, umożliwia trzymanie danych w pamięci aplikacji. </li>
+                    <li class="lead">JQuery i JavaScript - w pliku main.js w katalogu /static/js zdefiniowane są skrypty wykonywane po stronie klienta. </li>
+                    <li class="lead">GIT - system wersjonowania projektu. </li>
+                    <li class="lead">BitBucket - repozytorium projektu, prowadzący otrzyma dostęp do kodu źródłowego projektu. </li>
+
+                <hr class="my-4">
+                    <a class="btn btn-primary btn-sm" role="button" id="showInformationModal">
+                        <b>
+                            Dlaczego strona / aplikacja spełnia wymogi projektu?
+                        </b>
+                    </a>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="informationModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"> Spełnienie wymagań projektu </h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <ul>
+                        <li class="lead">
+                            Strona aplikacja spełnia wymagania projektu ponieważ zostały spełnione wszystkie podpunkty z wymagań.
+                        </li>
+                        <li class="lead">
+                            Aplikacja działa poprawnie we wszystkich popularnych przeglądarkach, została sprawdzona w Chrome, Mozilla Firefox, Opera, Internet Explorer.
+                        </li>
+                        <li class="lead">
+                            Zawiera alternatywny tekst dla obrazków. Znajdują się one głównie w liście dostępnych pojazdów do wypożyczenia.
+                        </li>
+                        <li class="lead">
+                            Poza HTML i CSS wykorzystuje wiele innych technologii, między innymi Java, Spring, H2 Database, JavaScript, JQuery, SpringSecurity, GIT, BitBucket.
+                        </li>
+                        <li class="lead">
+                            Na stronie głównej oraz w widoku pojazdów znajdują się animacje napisane w CSS.
+                        </li>
+                        <li class="lead">
+                            Przedewszystkim serwis był przewidziany do możliwości prowadzenia wypożyczalni samochodów, strona umożliwia dodawanie i usuwanie pojazdów, a także ich wypożyczanie oraz przeglądanie historii wypożyczeń.
+                        </li>
+                        <li class="lead">
+                            Strona jest intuicyjna, pozwala użytkowniki w łatwy i szybki sposób.
+                        </li>
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"> Zamknij </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+<footer th:insert="fragments :: footer"></footer>
+</html>

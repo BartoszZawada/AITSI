@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:insert="fragments.html :: headerfiles"></head>
+<body>
+<header th:insert="fragments.html :: nav"></header>
+<div class="mainContainer">
+    <br>
+    <div id="vehicleOrderAlreadyExistAlert" class="alert alert-danger" style="display: none">
+        <strong>Błąd!</strong> <br>
+        Nie udało się wynająć tego pojazdu w tym terminie!
+        <button id="closeVehicleOrderAlreadyExistAlert" type="button" class="btn-close" aria-label="Close"></button>
+    </div>
+    <div class="row" sec:authorize="hasAnyRole('ROLE_ADMIN')">
+        <div class="col text-left">
+        </div>
+        <div class="col-sm-2 text-right">
+            <button type="button" class="btn btn-dark btn-sm" id="showVehicleModal" align="right"><i class="fas fa-plus-square"></i> Dodaj pojazd!</button>
+        </div>
+    </div>
+    <br>
+    <div class="table-responsive scrollable">
+        <table class="table table-striped">
+            <caption class="tableHeader" th:text="${'Lista pojazdów dostępnych w serwisie'}"/>
+            <thead>
+            <tr>
+                <th scope="row"></th>
+                <th scope="row"></th>
+                <th scope="row">Typ</th>
+                <th scope="row">Marka</th>
+                <th scope="row">Data pierwszej rejestracji</th>
+                <th scope="row">Kolor</th>
+                <th scope="row">Pojemność silnika [cm^3]</th>
+                <th scope="row">Cena [$]</th>
+                <th scope="row"></th>
+                <th scope="row"></th>
+                <th scope="row" sec:authorize="hasAnyRole('ROLE_ADMIN')"></th>
+            </tr>
+            </thead>
+            <tbody th:if="${vehicles.size() > 0}">
+                <tr th:each="vehicle : ${vehicles}">
+                    <td></td>
+                    <td class="photo">
+                        <img width="80vh" height="70vh" th:src="${vehicle.imageLink}" alt="Obraz przedstawiający pojazd do wypożyczenia w wypożyczalni."/>
+                    </td>
+                    <td th:text="${vehicle.vehicleType}"></td>
+                    <td th:text="${vehicle.brand}"></td>
+                    <td th:text="${vehicle.productionYear}"></td>
+                    <td th:text="${vehicle.colour}"></td>
+                    <td th:text="${vehicle.engineCapacity}"></td>
+                    <td th:text="${vehicle.price}"></td>
+                    <td>
+                        <a class="btn btn-success btn-sm" id="showOrderVehicleModal" th:href="@{'/vehicles/rent/{id}'(id=${vehicle.id})}" role="button" data-toggle="tooltip" data-placement="top" title="Wypożycz pojazd">
+                            <i class="fas fa-dollar-sign"></i>
+                        </a>
+                    </td>
+                    <td>
+                        <a class="btn btn-warning btn-sm" id="showOrderHistoryModal" th:href="@{'/vehicles/history/{id}'(id=${vehicle.id})}" role="button" data-toggle="tooltip" data-placement="top" title="Historia wypożyczeń">
+                            <i class="fas fa-list-ol"></i>
+                        </a>
+                    </td>
+                    <td sec:authorize="hasAnyRole('ROLE_ADMIN')">
+                        <a class="btn btn-danger btn-sm" id="deleteVehicle" th:href="@{'/vehicles/delete/{id}'(id=${vehicle.id})}" role="button" data-toggle="tooltip" data-placement="top" title="Usuń pojazd">
+                            <i class="fas fa-minus-square"></i>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="modal fade" id="newVehicleModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <form id="newVehicleForm" th:action="@{/vehicles}" method="post">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"> Dodaj pojazd! </h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="vehicleType" class="col-form-label">
+                            Typ pojazdu
+                        </label>
+                        <select id="vehicleType" class="form-select" name="vehicleType">
+                            <option value="Osobowy" selected>Osobowy</option>
+                            <option value="Ciezarowy">Ciezarowy</option>
+                            <option value="Motocykl">Motocykl</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="vehicleBrand" class="col-form-label">
+                            Marka pojazdu
+                        </label>
+                        <input type="text" class="form-control" id="vehicleBrand" name="brand" value=""/>
+                    </div>
+                    <div class="form-group">
+                        <label for="imageLink" class="col-form-label">
+                            Link do obrazka
+                        </label>
+                        <input type="text" class="form-control" id="imageLink" name="imageLink" value=""/>
+                    </div>
+                    <div class="form-group">
+                        <label for="colour" class="col-form-label">
+                            Kolor
+                        </label>
+                        <select id="colour" class="form-select" name="colour">
+                            <option value="Biały" selected>Biały</option>
+                            <option value="Czarny">Czarny</option>
+                            <option value="Czerwony">Czerwony</option>
+                            <option value="Niebieski">Niebieski</option>
+                            <option value="Zielony">Zielony</option>
+                            <option value="Żółty">Żółty</option>
+                            <option value="Srebrny">Srebrny</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="engineCapacity" class="col-form-label">
+                            Pojemność silnika [cm^3]
+                        </label>
+                        <input type="number" min="0" max="9999" class="form-control" id="engineCapacity" name="engineCapacity" value="0"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="price" class="col-form-label">
+                            Cena [$]
+                        </label>
+                        <input type="number" min="0" max="9999" class="form-control" id="price" name="price" value="0"/>
+                    </div>
+                    <div class="form-row">
+                        <label for="productionYear" class="control-label">Data pierwszej rejestracji</label>
+                        <input id="productionYear" type="date" class="form-control" name="productionYear">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"> Zamknij </button>
+                    <button type="submit" class="btn btn-primary btn-sm"> Dodaj pojazd! </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal fade" id="vehicleOrderModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <form id="newVehicleOrderForm" th:action="@{/vehicles/order}" method="post">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"> Wypożycz! </h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-row">
+                        <label for="dateStart" class="control-label">Od kiedy</label>
+                        <input id="dateStart" type="date" class="form-control" name="dateStart">
+                    </div>
+                    <div class="form-row">
+                        <label for="dateFinish" class="control-label">Do kiedy</label>
+                        <input id="dateFinish" type="date" class="form-control" name="dateFinish">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"> Zamknij </button>
+                    <button type="submit" id="orderVehicleButton" class="btn btn-primary btn-sm"> Wypożycz! </button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="modal fade" id="vehicleOrderHistoryModal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"> Historia wypożyczeń! </h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="table-responsive scrollable">
+                    <table class="table table-striped">
+                        <thead id="orderHistoryHead"></thead>
+                        <tbody id="orderHistoryBody"></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"> Zamknij </button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

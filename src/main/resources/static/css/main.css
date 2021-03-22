@@ -1,0 +1,107 @@
+body {
+    overflow-x: hidden;
+    background: url("../img/tlo.jpg") no-repeat center center fixed;
+
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
+}
+
+.loginForm {
+    width: 600px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: 25px;
+    padding: 24px;
+}
+
+.mainContainer {
+    width: 80vw;
+    margin-right: auto;
+    margin-left: auto;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.myRounded {
+    border-radius: 1px;
+    box-shadow: 0px 0px 0px 8px rgba(255,255,255,0.4);
+}
+
+.tableHeader {
+    background: rgba(255, 255, 255, 0.80);
+    position: sticky;
+    color: black;
+    font-size: large;
+    font-weight: bold;
+    text-align:center;
+    caption-side: top;
+}
+
+.scrollable {
+    height: 70vh;
+    overflow-y: auto;
+    border-radius: 1px;
+    box-shadow: 0px 0px 0px 8px rgba(255,255,255,0.4);
+    /*Poniżej jest ustawianie tła dla tabeli*/
+    background: rgba(255, 255, 255, 0.80);
+    color: black;
+    font-weight: bold;
+    text-align:center;
+}
+
+.siteFooter {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.80);
+    color: black;
+    text-align: center;
+}
+
+.pulseAnimation {
+    font-size: 40px;
+    color: red;
+    transform: scale(1);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.55);
+    }
+
+    50% {
+        transform: scale(1);
+    }
+
+    100% {
+        transform: scale(0.55);
+    }
+}
+
+.imageIn {
+    width: 20vh;
+    height: 10vh;
+}
+
+.photo {
+    width: 20vh;
+    height: 10vh;
+}
+
+.photo img {
+    transition: all 0.5s ease-in-out;
+}
+
+.photo:hover img {
+    -webkit-transform: scale(1.4);
+    -ms-transform: scale(1.4);
+    transform: scale(1.4);
+}
+
+.infoPanel {
+    background: rgba(255, 255, 255, 0.65);
+}

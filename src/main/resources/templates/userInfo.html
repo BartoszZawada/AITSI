@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+>
+<head th:insert="fragments.html :: headerfiles"></head>
+<body>
+<header th:insert="fragments.html :: nav"></header>
+    <div class="container">
+        <br>
+        <div class="table-responsive scrollable">
+            <table class="table table-striped">
+                <caption class="tableHeader" th:text="${'Lista Twoich zamówień'}"/>
+                <thead th:switch="${dtos.size() > 0}">
+                <tr th:case="true">
+                    <th scope="row">Marka</th>
+                    <th scope="row">Typ</th>
+                    <th scope="row">Od</th>
+                    <th scope="row">Do</th>
+                </tr>
+                </thead>
+                <tbody th:switch="${dtos.size() > 0}">
+                <div th:case="true">
+                    <tr th:each="dto : ${dtos}">
+                        <td th:text="${dto.vehicle.brand}"></td>
+                        <td th:text="${dto.vehicle.vehicleType}"></td>
+                        <td th:text="${dto.dateStart}"></td>
+                        <td th:text="${dto.dateFinish}"></td>
+                    </tr>
+                </div>
+                <div th:case="false">
+                    <tr>
+                        <td th:text="'W tej chwili nie masz żadnych zamówień!'"></td>
+                    </tr>
+                </div>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+<footer th:insert="fragments :: footer"></footer>
+</html>
